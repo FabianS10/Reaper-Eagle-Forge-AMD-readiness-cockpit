@@ -1,0 +1,407 @@
+{
+  "source_mode": "repo_scan",
+  "nodes": [
+    {
+      "id": "repository",
+      "label": "Repository Layer",
+      "type": "zone",
+      "status": "fail",
+      "group": "repository",
+      "fx": -260,
+      "fy": -120,
+      "fz": 0,
+      "x": -260,
+      "y": -120,
+      "z": 0,
+      "evidence_count": 3,
+      "source": "repo_scan"
+    },
+    {
+      "id": "host",
+      "label": "Host System",
+      "type": "zone",
+      "status": "not_checked",
+      "group": "host",
+      "fx": 0,
+      "fy": -240,
+      "fz": 0,
+      "x": 0,
+      "y": -240,
+      "z": 0,
+      "evidence_count": 0,
+      "source": "repo_scan"
+    },
+    {
+      "id": "amd_runtime",
+      "label": "AMD Runtime",
+      "type": "zone",
+      "status": "not_checked",
+      "group": "amd_runtime",
+      "fx": 0,
+      "fy": -120,
+      "fz": 0,
+      "x": 0,
+      "y": -120,
+      "z": 0,
+      "evidence_count": 0,
+      "source": "repo_scan"
+    },
+    {
+      "id": "ml_framework",
+      "label": "ML Framework",
+      "type": "zone",
+      "status": "not_checked",
+      "group": "ml_framework",
+      "fx": 0,
+      "fy": 0,
+      "fz": 0,
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "evidence_count": 0,
+      "source": "repo_scan"
+    },
+    {
+      "id": "benchmark",
+      "label": "Benchmark Layer",
+      "type": "zone",
+      "status": "fail",
+      "group": "benchmark",
+      "fx": 0,
+      "fy": 120,
+      "fz": 0,
+      "x": 0,
+      "y": 120,
+      "z": 0,
+      "evidence_count": 5,
+      "source": "repo_scan"
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence Layer",
+      "type": "zone",
+      "status": "fail",
+      "group": "evidence",
+      "fx": 260,
+      "fy": 0,
+      "fz": 0,
+      "x": 260,
+      "y": 0,
+      "z": 0,
+      "evidence_count": 5,
+      "source": "repo_scan"
+    },
+    {
+      "id": "report",
+      "label": "Report Layer",
+      "type": "zone",
+      "status": "pass",
+      "group": "report",
+      "fx": 0,
+      "fy": 240,
+      "fz": 0,
+      "x": 0,
+      "y": 240,
+      "z": 0,
+      "evidence_count": 1,
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_0_NO_SYNCHRONIZATION_BEFORE_TIME",
+      "label": "NO_SYNCHRONIZATION_BEFORE_TIME",
+      "type": "finding",
+      "status": "fail",
+      "severity": "high",
+      "group": "benchmark",
+      "parent": "benchmark",
+      "file_path": "benchmark.py",
+      "line_number": 11,
+      "snippet": "Timing API present; synchronization token missing.",
+      "message": "GPU timing appears to be collected without an explicit synchronization boundary.",
+      "suggestion": "Add warm-up and synchronize before/after GPU timing to avoid misleading latency measurements.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_1_MISSING_CONTAINER_ARTIFACT",
+      "label": "MISSING_CONTAINER_ARTIFACT",
+      "type": "finding",
+      "status": "fail",
+      "severity": "high",
+      "group": "evidence",
+      "parent": "evidence",
+      "file_path": null,
+      "line_number": null,
+      "snippet": "Containerization artifact missing.",
+      "message": "No Dockerfile or Docker Compose artifact was detected.",
+      "suggestion": "Add a runnable container path so the repository is an executable submission artifact, not just source code.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_2_MISSING_EVIDENCE_MANIFEST",
+      "label": "MISSING_EVIDENCE_MANIFEST",
+      "type": "finding",
+      "status": "fail",
+      "severity": "high",
+      "group": "evidence",
+      "parent": "evidence",
+      "file_path": null,
+      "line_number": null,
+      "snippet": "Evidence manifest not found.",
+      "message": "No evidence manifest, run metadata, or hash artifact was detected.",
+      "suggestion": "Attach run metadata, hardware profile, benchmark config/results, and SHA-256 hashes for evidence-bearing claims.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_3_CUDA_DEVICE_HARDCODED",
+      "label": "CUDA_DEVICE_HARDCODED",
+      "type": "finding",
+      "status": "fail",
+      "severity": "high",
+      "group": "repository",
+      "parent": "repository",
+      "file_path": "benchmark.py",
+      "line_number": 8,
+      "snippet": "model = torch.nn.Linear(1024, 1024).cuda()",
+      "message": "Direct CUDA device movement detected.",
+      "suggestion": "Use a device abstraction and validate the path under a ROCm-enabled PyTorch runtime.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_4_TORCH_CUDA_DIRECT_DEVICE",
+      "label": "TORCH_CUDA_DIRECT_DEVICE",
+      "type": "finding",
+      "status": "fail",
+      "severity": "high",
+      "group": "repository",
+      "parent": "repository",
+      "file_path": "benchmark.py",
+      "line_number": 7,
+      "snippet": "device = \"cuda\"",
+      "message": "Hardcoded CUDA device selection detected.",
+      "suggestion": "Resolve the active device at runtime and record backend/device identity in the benchmark manifest.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_5_NO_P50_P95_LATENCY",
+      "label": "NO_P50_P95_LATENCY",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "benchmark",
+      "parent": "benchmark",
+      "file_path": "benchmark.py",
+      "line_number": 15,
+      "snippet": "Benchmark hint present; p50/p95 tokens missing.",
+      "message": "Benchmark output does not appear to capture both p50 and p95 latency.",
+      "suggestion": "Report p50 and p95 latency over repeated timed runs instead of relying on a single average.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_6_NO_PRECISION_DECLARATION",
+      "label": "NO_PRECISION_DECLARATION",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "benchmark",
+      "parent": "benchmark",
+      "file_path": "benchmark.py",
+      "line_number": null,
+      "snippet": "Benchmark hint present; precision/dtype missing.",
+      "message": "Benchmark does not declare precision or dtype.",
+      "suggestion": "Record fp32/fp16/bf16 and relevant autocast or AMP policy in the benchmark manifest.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_7_NO_WARMUP_POLICY",
+      "label": "NO_WARMUP_POLICY",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "benchmark",
+      "parent": "benchmark",
+      "file_path": "benchmark.py",
+      "line_number": null,
+      "snippet": "Benchmark hint present; warm-up policy missing.",
+      "message": "Benchmark-like code does not declare a warm-up policy.",
+      "suggestion": "Declare warm-up count separately from timed runs.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_8_SINGLE_RUN_BENCHMARK_RISK",
+      "label": "SINGLE_RUN_BENCHMARK_RISK",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "benchmark",
+      "parent": "benchmark",
+      "file_path": "benchmark.py",
+      "line_number": 15,
+      "snippet": "Repeated-run loop was not detected near benchmark-like code.",
+      "message": "Benchmark may rely on a single measurement instead of repeated trials.",
+      "suggestion": "Use repeated timed trials and report distribution statistics.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_9_MISSING_SCOPE_AND_NON_GOALS",
+      "label": "MISSING_SCOPE_AND_NON_GOALS",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "evidence",
+      "parent": "evidence",
+      "file_path": null,
+      "line_number": null,
+      "snippet": "Claim boundary document missing.",
+      "message": "No explicit scope, non-goals, or claim boundaries were detected.",
+      "suggestion": "State what the tool does, what it does not do yet, and which claims require human review or live hardware evidence.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_10_MISSING_DEPENDENCY_LOCK_OR_SPEC",
+      "label": "MISSING_DEPENDENCY_LOCK_OR_SPEC",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "evidence",
+      "parent": "evidence",
+      "file_path": null,
+      "line_number": null,
+      "snippet": "Dependency provenance missing.",
+      "message": "Dependency specification or lockfile was not detected.",
+      "suggestion": "Record dependencies with versions so benchmark and migration evidence can be reproduced.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_11_MISSING_SETUP_README",
+      "label": "MISSING_SETUP_README",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "evidence",
+      "parent": "evidence",
+      "file_path": null,
+      "line_number": null,
+      "snippet": "README missing.",
+      "message": "No README/setup instructions were detected.",
+      "suggestion": "Add setup, run, expected inputs, expected outputs, and known limitations.",
+      "source": "repo_scan"
+    },
+    {
+      "id": "finding_12_NVIDIA_SMI_DEPENDENCY",
+      "label": "NVIDIA_SMI_DEPENDENCY",
+      "type": "finding",
+      "status": "warn",
+      "severity": "medium",
+      "group": "repository",
+      "parent": "repository",
+      "file_path": "benchmark.py",
+      "line_number": 5,
+      "snippet": "subprocess.run([\"nvidia-smi\"])",
+      "message": "NVIDIA telemetry command detected.",
+      "suggestion": "Abstract telemetry and map it to amd-smi or rocm-smi on AMD systems.",
+      "source": "repo_scan"
+    }
+  ],
+  "links": [
+    {
+      "source": "host",
+      "target": "amd_runtime",
+      "type": "depends_on"
+    },
+    {
+      "source": "amd_runtime",
+      "target": "ml_framework",
+      "type": "depends_on"
+    },
+    {
+      "source": "ml_framework",
+      "target": "benchmark",
+      "type": "depends_on"
+    },
+    {
+      "source": "benchmark",
+      "target": "report",
+      "type": "depends_on"
+    },
+    {
+      "source": "repository",
+      "target": "benchmark",
+      "type": "informs"
+    },
+    {
+      "source": "repository",
+      "target": "report",
+      "type": "informs"
+    },
+    {
+      "source": "evidence",
+      "target": "report",
+      "type": "supports"
+    },
+    {
+      "source": "benchmark",
+      "target": "finding_0_NO_SYNCHRONIZATION_BEFORE_TIME",
+      "type": "expands_to"
+    },
+    {
+      "source": "evidence",
+      "target": "finding_1_MISSING_CONTAINER_ARTIFACT",
+      "type": "expands_to"
+    },
+    {
+      "source": "evidence",
+      "target": "finding_2_MISSING_EVIDENCE_MANIFEST",
+      "type": "expands_to"
+    },
+    {
+      "source": "repository",
+      "target": "finding_3_CUDA_DEVICE_HARDCODED",
+      "type": "expands_to"
+    },
+    {
+      "source": "repository",
+      "target": "finding_4_TORCH_CUDA_DIRECT_DEVICE",
+      "type": "expands_to"
+    },
+    {
+      "source": "benchmark",
+      "target": "finding_5_NO_P50_P95_LATENCY",
+      "type": "expands_to"
+    },
+    {
+      "source": "benchmark",
+      "target": "finding_6_NO_PRECISION_DECLARATION",
+      "type": "expands_to"
+    },
+    {
+      "source": "benchmark",
+      "target": "finding_7_NO_WARMUP_POLICY",
+      "type": "expands_to"
+    },
+    {
+      "source": "benchmark",
+      "target": "finding_8_SINGLE_RUN_BENCHMARK_RISK",
+      "type": "expands_to"
+    },
+    {
+      "source": "evidence",
+      "target": "finding_9_MISSING_SCOPE_AND_NON_GOALS",
+      "type": "expands_to"
+    },
+    {
+      "source": "evidence",
+      "target": "finding_10_MISSING_DEPENDENCY_LOCK_OR_SPEC",
+      "type": "expands_to"
+    },
+    {
+      "source": "evidence",
+      "target": "finding_11_MISSING_SETUP_README",
+      "type": "expands_to"
+    },
+    {
+      "source": "repository",
+      "target": "finding_12_NVIDIA_SMI_DEPENDENCY",
+      "type": "expands_to"
+    }
+  ]
+}

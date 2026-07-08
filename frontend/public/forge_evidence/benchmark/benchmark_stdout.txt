@@ -1,0 +1,1 @@
+PLACEHOLDER: paste known_benchmark.py stdout from the MI300X session here.

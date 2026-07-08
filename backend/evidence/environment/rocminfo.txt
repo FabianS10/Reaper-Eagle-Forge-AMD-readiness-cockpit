@@ -1,0 +1,1 @@
+PLACEHOLDER: paste raw rocminfo output captured from AMD Developer Cloud MI300X here.

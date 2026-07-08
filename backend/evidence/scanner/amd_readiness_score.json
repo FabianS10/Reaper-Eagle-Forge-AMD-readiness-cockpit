@@ -1,0 +1,31 @@
+{
+  "score": 69,
+  "label": "Partially portable, major evidence gaps",
+  "score_breakdown": {
+    "overall": 69,
+    "portability": 71,
+    "benchmark_integrity": 60,
+    "evidence_completeness": 62,
+    "claim_discipline": 94
+  },
+  "claim_ledger": {
+    "verified_claims": [
+      "Repository code was statically inspected without execution.",
+      "CUDA/NVIDIA assumptions are categorized separately from benchmark-methodology issues."
+    ],
+    "allowed_claims": [
+      "Forge can identify migration-readiness risks before a team invests in AMD porting work.",
+      "Forge can generate an audit report that separates repository findings from live/replayed hardware evidence."
+    ],
+    "blocked_claims": [
+      "Do not claim benchmark superiority or production-grade performance from this repository yet.",
+      "Do not claim the workload is AMD-ready until execution blockers are removed or isolated.",
+      "Do not claim the project is hackathon-complete until it has a runnable container path."
+    ],
+    "required_next_evidence": [
+      "Add repeated timed runs, p50/p95, hardware metadata, raw logs, and SHA-256 evidence manifest.",
+      "Replace hardcoded CUDA/NVIDIA-only paths or label them as optional backends.",
+      "Add Dockerfile/Docker Compose and setup instructions."
+    ]
+  }
+}

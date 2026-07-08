@@ -1,0 +1,8 @@
+{
+  "status": "placeholder",
+  "gpu_name": "AMD Instinct MI300X",
+  "p50_latency_ms": "TO_FILL",
+  "p95_latency_ms": "TO_FILL",
+  "throughput_items_per_s": "TO_FILL",
+  "note": "Replace with real captured benchmark JSON before final submission."
+}

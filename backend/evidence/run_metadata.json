@@ -1,0 +1,19 @@
+{
+  "project": "Reaper Eagle Forge ML",
+  "run_id": "forge-mi300x-demo-001",
+  "capture_mode": "placeholder_evidence_capsule_until_replaced_with_real_mi300x_capture",
+  "hardware": {
+    "provider": "AMD Developer Cloud",
+    "gpu": "AMD Instinct MI300X",
+    "gpu_count": 1
+  },
+  "software": {
+    "os": "Ubuntu/Linux",
+    "rocm_version": "TO_FILL_FROM_CAPTURED_RUN",
+    "python_version": "TO_FILL_FROM_CAPTURED_RUN",
+    "pytorch_version": "TO_FILL_FROM_CAPTURED_RUN",
+    "torch_hip_version": "TO_FILL_FROM_CAPTURED_RUN"
+  },
+  "captured_at_utc": "TO_FILL_FROM_CAPTURED_RUN",
+  "public_demo_note": "This repository includes placeholder evidence files. Before submission, replace them with real captured MI300X outputs and regenerate the SHA-256 manifest. The hosted demo must label replayed evidence as replay, not live hardware."
+}

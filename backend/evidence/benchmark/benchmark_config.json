@@ -1,0 +1,8 @@
+{
+  "benchmark_name": "forge_known_linear_gemm",
+  "repo_code_executed": false,
+  "batch_size": 64,
+  "precision": "fp32",
+  "warmup_count": 5,
+  "timed_runs": 30
+}

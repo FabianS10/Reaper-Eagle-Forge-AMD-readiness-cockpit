@@ -1,0 +1,1 @@
+PLACEHOLDER: paste torch.profiler table/export if rocprofv3 is unavailable or unstable.
