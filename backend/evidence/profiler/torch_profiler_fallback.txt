@@ -1,1 +1,6 @@
-PLACEHOLDER: paste torch.profiler table/export if rocprofv3 is unavailable or unstable.
+{
+  "rocprofv3": "/opt/rocm/bin/rocprofv3",
+  "rocprof": "/opt/rocm/bin/rocprof",
+  "torch_profiler_fallback": "available_if_torch_imports",
+  "policy": "Try rocprofv3 first. If parsing is unstable, fallback to torch.profiler for demo reliability."
+}

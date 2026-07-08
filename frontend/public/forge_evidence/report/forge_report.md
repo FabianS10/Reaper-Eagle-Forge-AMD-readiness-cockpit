@@ -2,7 +2,7 @@
 
 **Overall Forge Score:** 69/100  
 **Status:** Partially portable, major evidence gaps  
-**Hardware mode:** evidence_replay_or_static_scan
+**Hardware mode:** mi300x_captured_evidence_replay
 
 ## Executive summary
 

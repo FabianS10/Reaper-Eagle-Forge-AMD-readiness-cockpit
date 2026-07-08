@@ -1,8 +1,18 @@
 {
-  "status": "placeholder",
-  "gpu_name": "AMD Instinct MI300X",
-  "p50_latency_ms": "TO_FILL",
-  "p95_latency_ms": "TO_FILL",
-  "throughput_items_per_s": "TO_FILL",
-  "note": "Replace with real captured benchmark JSON before final submission."
+  "status": "ok",
+  "benchmark_name": "forge_known_linear_gemm",
+  "repo_code_executed": false,
+  "device_type": "cuda",
+  "gpu_name": "AMD Instinct MI300X VF",
+  "torch_version": "2.10.0+rocm7.2.4.git3d3aa833",
+  "torch_hip_version": "7.2.53211",
+  "batch_size": 64,
+  "precision": "fp32",
+  "warmup_count": 5,
+  "timed_runs": 30,
+  "wall_time_s": 0.0018016809999608085,
+  "p50_latency_ms": 0.056572500000129367,
+  "p95_latency_ms": 0.07314399999813759,
+  "throughput_items_per_s": 1065671.4479654084,
+  "note": "Known Forge-owned benchmark. It never executes scanned repository code."
 }

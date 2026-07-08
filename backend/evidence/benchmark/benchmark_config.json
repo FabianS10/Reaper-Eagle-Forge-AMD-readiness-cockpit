@@ -1,6 +1,7 @@
 {
   "benchmark_name": "forge_known_linear_gemm",
-  "repo_code_executed": false,
+  "device_type": "cuda",
+  "gpu_name": "AMD Instinct MI300X VF",
   "batch_size": 64,
   "precision": "fp32",
   "warmup_count": 5,

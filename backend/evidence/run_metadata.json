@@ -1,19 +1,9 @@
 {
   "project": "Reaper Eagle Forge ML",
-  "run_id": "forge-mi300x-demo-001",
-  "capture_mode": "placeholder_evidence_capsule_until_replaced_with_real_mi300x_capture",
-  "hardware": {
-    "provider": "AMD Developer Cloud",
-    "gpu": "AMD Instinct MI300X",
-    "gpu_count": 1
-  },
-  "software": {
-    "os": "Ubuntu/Linux",
-    "rocm_version": "TO_FILL_FROM_CAPTURED_RUN",
-    "python_version": "TO_FILL_FROM_CAPTURED_RUN",
-    "pytorch_version": "TO_FILL_FROM_CAPTURED_RUN",
-    "torch_hip_version": "TO_FILL_FROM_CAPTURED_RUN"
-  },
-  "captured_at_utc": "TO_FILL_FROM_CAPTURED_RUN",
-  "public_demo_note": "This repository includes placeholder evidence files. Before submission, replace them with real captured MI300X outputs and regenerate the SHA-256 manifest. The hosted demo must label replayed evidence as replay, not live hardware."
+  "run_id": "forge-mi300x-20260708T203520Z",
+  "capture_mode": "real_mi300x_captured_run",
+  "hardware": {"provider": "AMD Developer Cloud", "gpu": "AMD Instinct MI300X", "gpu_count": 1},
+  "software": {"os": "Linux 96a2d735e137 6.8.0-124-generic #124-Ubuntu SMP PREEMPT_DYNAMIC Tue May 26 13:00:45 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux", "rocm_version": "see raw logs", "python_version": "Python 3.12.3", "pytorch_version": "see smoke test", "torch_hip_version": "see smoke test"},
+  "captured_at_utc": "2026-07-08T20:35:20Z",
+  "public_demo_note": "The hosted demo replays this captured evidence and is not connected to live MI300X hardware."
 }

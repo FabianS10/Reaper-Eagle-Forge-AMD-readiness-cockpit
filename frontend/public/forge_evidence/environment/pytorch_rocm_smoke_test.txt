@@ -1,1 +1,11 @@
-PLACEHOLDER: paste JSON output from /app/diagnostics/pytorch_smoke_test.py here.
+{
+  "torch_import": true,
+  "torch_version": "2.10.0+rocm7.2.4.git3d3aa833",
+  "torch_hip_version": "7.2.53211",
+  "cuda_available_api": true,
+  "device_count": 1,
+  "device_name": "AMD Instinct MI300X VF",
+  "tensor_allocation": true,
+  "gemm_smoke_test": true,
+  "note": "PyTorch ROCm builds may expose AMD devices through the torch.cuda API; this is a compatibility API, not proof of NVIDIA hardware."
+}

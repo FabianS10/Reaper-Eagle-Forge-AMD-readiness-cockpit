@@ -1,1 +1,7 @@
-PLACEHOLDER: paste raw amd-smi list output captured from AMD Developer Cloud MI300X here.
+GPU: 0
+    BDF: 0000:83:00.0
+    UUID: e9ff74b5-0000-1000-80e6-101a155b4635
+    KFD_ID: 21947
+    NODE_ID: 1
+    PARTITION_ID: 0
+

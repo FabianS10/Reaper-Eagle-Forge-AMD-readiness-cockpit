@@ -1,5 +1,5 @@
 {
-  "source_mode": "repo_scan",
+  "source_mode": "evidence_replay",
   "nodes": [
     {
       "id": "repository",
@@ -14,7 +14,7 @@
       "y": -120,
       "z": 0,
       "evidence_count": 3,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "host",
@@ -29,7 +29,7 @@
       "y": -240,
       "z": 0,
       "evidence_count": 0,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "amd_runtime",
@@ -44,7 +44,7 @@
       "y": -120,
       "z": 0,
       "evidence_count": 0,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "ml_framework",
@@ -59,7 +59,7 @@
       "y": 0,
       "z": 0,
       "evidence_count": 0,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "benchmark",
@@ -74,7 +74,7 @@
       "y": 120,
       "z": 0,
       "evidence_count": 5,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "evidence",
@@ -88,8 +88,8 @@
       "x": 260,
       "y": 0,
       "z": 0,
-      "evidence_count": 5,
-      "source": "repo_scan"
+      "evidence_count": 6,
+      "source": "evidence_replay"
     },
     {
       "id": "report",
@@ -104,7 +104,7 @@
       "y": 240,
       "z": 0,
       "evidence_count": 1,
-      "source": "repo_scan"
+      "source": "evidence_replay"
     },
     {
       "id": "finding_0_NO_SYNCHRONIZATION_BEFORE_TIME",
