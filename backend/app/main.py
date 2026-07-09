@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
 
 from .diagnostics import enforce_rate_limit, local_capabilities, run_fixed_check
 from .models import (
@@ -164,3 +166,11 @@ def product_positioning() -> dict:
 def topology_demo() -> dict:
     scan = scan_demo_repo()
     return build_topology(findings=scan.findings, source_mode="combined")
+
+app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
+
+@app.get("/{full_path:path}")
+async def spa_catch_all(full_path: str):
+    if full_path.startswith("api/"):
+        return {"error": "not found"}, 404
+    return FileResponse(os.path.join("static", "index.html"))
