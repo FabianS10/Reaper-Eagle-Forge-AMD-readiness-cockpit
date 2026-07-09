@@ -29,9 +29,9 @@ app = FastAPI(title="Reaper Eagle Forge ML", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://reaper-eagle-forge-ml.netlify.app/"],
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
