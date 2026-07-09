@@ -167,10 +167,3 @@ def topology_demo() -> dict:
     scan = scan_demo_repo()
     return build_topology(findings=scan.findings, source_mode="combined")
 
-app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
-
-@app.get("/{full_path:path}")
-async def spa_catch_all(full_path: str):
-    if full_path.startswith("api/"):
-        return {"error": "not found"}, 404
-    return FileResponse(os.path.join("static", "index.html"))
