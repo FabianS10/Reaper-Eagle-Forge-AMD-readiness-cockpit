@@ -154,7 +154,7 @@ sequenceDiagram
     participant Judge as Judge / User
     participant UI as Frontend
     participant API as FastAPI Backend
-    participant Host as Deployment Host (Fly.io)
+    participant Host as Deployment Host (Railway/ netlify)
     participant MI300X as MI300X Capsule (pre-captured)
 
     Judge->>UI: Submit GitHub repo URL
@@ -187,7 +187,7 @@ flowchart LR
         Rec[Optional: screen-record a live<br/>Live AMD Check pass for the demo video]
     end
 
-    subgraph Perm["Fly.io — the permanent judged deployment"]
+    subgraph Perm["Railway/ netlify — the permanent judged deployment"]
         BE[Backend]
         FE[Frontend]
         LiveP[Live Check reports 'not_available' /<br/>'cpu_only_runtime' — honestly, no ROCm on host]
@@ -204,7 +204,7 @@ flowchart LR
 | Host | Role | GPU present? | Live AMD Check result |
 |---|---|---|---|
 | **MI300X (AMD Developer Cloud)** | One-time evidence capture, optional video recording | Yes | Real pass, used to produce the capsule — not the live judged URL |
-| **Fly.io (or equivalent)** | Permanent backend + frontend judges click into | No | Honestly reports `not_available` / `cpu_only_runtime` |
+| **Railway and netlify (or equivalent)** | Permanent backend + frontend judges click into | No | Honestly reports `not_available` / `cpu_only_runtime` |
 
 This split is consistent with Forge's own claim-discipline pitch: the live deployment never pretends to have GPU access it doesn't have. Evidence Replay is what carries the "proven on real MI300X hardware" claim — clearly labeled as replay, exactly as this document states above.
 
