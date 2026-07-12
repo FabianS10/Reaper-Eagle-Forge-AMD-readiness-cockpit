@@ -102,7 +102,7 @@ flowchart LR
 | Reporting | Deterministic Decision Report fallback |
 | Samples | Broken/fixed benchmark samples |
 | Evidence tooling | Evidence capsule structure and capture script |
-| Packaging | Docker Compose submission path |
+| Packaging | Docker Compose local-dev path |
 
 ---
 
@@ -152,23 +152,21 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant Judge as Judge / User
-    participant UI as Frontend
-    participant API as FastAPI Backend
-    participant Host as Deployment Host (Fly.io)
+    participant UI as Frontend (Netlify)
+    participant API as FastAPI Backend (Railway)
     participant MI300X as MI300X Capsule (pre-captured)
 
     Judge->>UI: Submit GitHub repo URL
-    UI->>API: POST /scan
+    UI->>API: POST /api/repo/scan
     API->>API: Static analysis + taxonomy match
     API-->>UI: Portability / Integrity / Completeness / Claim scores
     Judge->>UI: Trigger Live AMD Check
     UI->>API: Run fixed diagnostic enum
-    API->>Host: rocminfo / rocm-smi (if present)
-    Host-->>API: result or "not_available"
-    API-->>UI: Honest status (no GPU spoofing)
+    API->>API: rocminfo / rocm-smi (if present)
+    API-->>UI: Honest status — "not_available" on this host (no GPU spoofing)
     Judge->>UI: Open Evidence Replay
-    UI->>MI300X: Load captured logs + manifest
-    MI300X-->>UI: Verified real-hardware evidence, labeled as replay
+    UI->>API: Request captured capsule
+    API-->>UI: Verified real-hardware evidence, labeled as replay
     UI-->>Judge: Decision Report — what's claimed, blocked, and next
 ```
 
@@ -178,7 +176,12 @@ sequenceDiagram
 
 **Why not just deploy the whole app on the MI300X box?**
 
-AMD Developer Cloud MI300X instances are allocated for the hackathon window — they are not meant as a permanent host. If the public prototype URL lived there and the instance got reclaimed or rebooted mid-judging, the demo would die. Fly.io (the original plan) or an equivalent like Railway/Render stays up regardless of what happens to the GPU allocation, and that's what `docker-compose.yml` and the Dockerfiles are already built for.
+AMD Developer Cloud MI300X instances are allocated for the hackathon window — they are not meant as a permanent host. If the public prototype URL lived there and the instance got reclaimed or rebooted mid-judging, the demo would die.
+
+The deployed system splits capture from serving:
+
+- **Backend** — FastAPI, deployed on **Railway**, built from `backend/Dockerfile`.
+- **Frontend** — React/Vite, deployed on **Netlify**, built as static assets. Netlify proxies `/api/*` to the Railway backend server-side, so judges only ever see a single public URL — no CORS, no second link to hand out.
 
 ```mermaid
 flowchart LR
@@ -187,15 +190,14 @@ flowchart LR
         Rec[Optional: screen-record a live<br/>Live AMD Check pass for the demo video]
     end
 
-    subgraph Perm["Fly.io — the permanent judged deployment"]
-        BE[Backend]
-        FE[Frontend]
+    subgraph Perm["Railway + Netlify — the permanent judged deployment"]
+        BE[Backend — Railway]
+        FE[Frontend — Netlify, proxies /api/* to Railway]
         LiveP[Live Check reports 'not_available' /<br/>'cpu_only_runtime' — honestly, no ROCm on host]
         ReplayP[Evidence Replay carries the<br/>'proven on real MI300X' claim]
     end
 
     Cap -->|copy capsule + regenerate SHA-256| ReplayP
-    Rec -.reference for video only.-> Perm
 
     style MI fill:#1a1a1a,stroke:#888,color:#ccc
     style Perm fill:#1a1a1a,stroke:#DAA520,color:#eee
@@ -204,9 +206,11 @@ flowchart LR
 | Host | Role | GPU present? | Live AMD Check result |
 |---|---|---|---|
 | **MI300X (AMD Developer Cloud)** | One-time evidence capture, optional video recording | Yes | Real pass, used to produce the capsule — not the live judged URL |
-| **Fly.io (or equivalent)** | Permanent backend + frontend judges click into | No | Honestly reports `not_available` / `cpu_only_runtime` |
+| **Railway (backend) + Netlify (frontend)** | Permanent app judges click into, single public URL | No | Honestly reports `not_available` / `cpu_only_runtime` |
 
 This split is consistent with Forge's own claim-discipline pitch: the live deployment never pretends to have GPU access it doesn't have. Evidence Replay is what carries the "proven on real MI300X hardware" claim — clearly labeled as replay, exactly as this document states above.
+
+**A note on hardware scale:** the current benchmark workload (a small linear GEMM) does not exercise the MI300X's full 192GB memory or 304-compute-unit capacity — a static repository scanner doesn't need it. MI300X was used because it was the AMD Developer Cloud hardware available for this hackathon, not because the current system's workload demands that scale. See [Roadmap](#roadmap-not-mvp) for where that headroom actually points.
 
 ---
 
@@ -236,6 +240,8 @@ Open `http://localhost:5173`.
 
 ## Docker Compose
 
+Local development only — the deployed app uses separate Railway/Netlify builds, not Compose.
+
 ```bash
 docker compose up --build
 ```
@@ -249,7 +255,7 @@ docker compose up --build
 
 ## Capture an MI300X evidence capsule
 
-On the AMD Developer Cloud machine, from the project root:
+On the AMD Developer Cloud instance, from the project root:
 
 ```bash
 ./scripts/capture_mi300x_evidence.sh forge_evidence_capture
@@ -260,7 +266,7 @@ Then copy the captured folder into:
 - `backend/evidence/`
 - `frontend/public/forge_evidence/`
 
-Regenerate the SHA-256 manifest after replacing placeholder files.
+Regenerate the SHA-256 manifest after replacing placeholder files. The manifest is verified locally, before the capsule is committed — an unverified or corrupted capsule never reaches the deployed application.
 
 ---
 
@@ -283,3 +289,4 @@ Regenerate the SHA-256 manifest after replacing placeholder files.
 - vLLM-specific optimization recipes
 - Container generation for scanned repositories
 - Reaper Eagle Forge Studio for graphics/shaders/real-time rendering
+- **Agent-based semantic repository analysis** — an on-device reasoning model, hosted in-VRAM on hardware like MI300X, to go beyond pattern-based CUDA/NVIDIA taxonomy matching toward semantic understanding of a repository's actual portability risk. This is the natural use for the memory capacity current MVP scoring doesn't need; it is not built, and is listed here rather than implied.
