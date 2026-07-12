@@ -10,6 +10,7 @@ Reaper Eagle Forge ML turns CUDA-centered ML repos and benchmark claims into aud
 
 > Most migration tools tell developers what to change. Forge tells teams what they are allowed to claim.
 
+📄 **[Full technical paper (PDF)](./Reaper_Eagle_Forge_ML.pdf)** — architecture, trust boundaries, evidence capture methodology, and the real MI300X capture run with hash-verified results.
 ---
 
 ## Table of contents
